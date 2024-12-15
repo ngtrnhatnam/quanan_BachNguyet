@@ -1,0 +1,11 @@
+C:\Users\moder\quanan_BachNguyet\bin\Debug\quan_an_Bach_Nguyet.exe.config
+C:\Users\moder\quanan_BachNguyet\bin\Debug\quan_an_Bach_Nguyet.exe
+C:\Users\moder\quanan_BachNguyet\bin\Debug\quan_an_Bach_Nguyet.pdb
+C:\Users\moder\quanan_BachNguyet\obj\Debug\quan_an_Bach_Nguyet.csproj.AssemblyReference.cache
+C:\Users\moder\quanan_BachNguyet\obj\Debug\quan_an_Bach_Nguyet.frmDangNhap.resources
+C:\Users\moder\quanan_BachNguyet\obj\Debug\quan_an_Bach_Nguyet.frmTrangChu.resources
+C:\Users\moder\quanan_BachNguyet\obj\Debug\quan_an_Bach_Nguyet.Properties.Resources.resources
+C:\Users\moder\quanan_BachNguyet\obj\Debug\quan_an_Bach_Nguyet.csproj.GenerateResource.cache
+C:\Users\moder\quanan_BachNguyet\obj\Debug\quan_an_Bach_Nguyet.csproj.CoreCompileInputs.cache
+C:\Users\moder\quanan_BachNguyet\obj\Debug\quan_an_Bach_Nguyet.exe
+C:\Users\moder\quanan_BachNguyet\obj\Debug\quan_an_Bach_Nguyet.pdb
