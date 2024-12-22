@@ -9,3 +9,17 @@ C:\Users\moder\quanan_BachNguyet\obj\Debug\quan_an_Bach_Nguyet.csproj.GenerateRe
 C:\Users\moder\quanan_BachNguyet\obj\Debug\quan_an_Bach_Nguyet.csproj.CoreCompileInputs.cache
 C:\Users\moder\quanan_BachNguyet\obj\Debug\quan_an_Bach_Nguyet.exe
 C:\Users\moder\quanan_BachNguyet\obj\Debug\quan_an_Bach_Nguyet.pdb
+C:\Users\moder\quanan_BachNguyet\bin\Debug\DevComponents.DotNetBar2.dll
+C:\Users\moder\quanan_BachNguyet\bin\Debug\DevComponents.DotNetBar2.xml
+C:\Users\moder\quanan_BachNguyet\obj\Debug\quan_an_.CF9369C4.Up2Date
+C:\Users\moder\quanan_BachNguyet\bin\Debug\QRCoder.dll
+C:\Users\moder\quanan_BachNguyet\obj\Debug\quan_an_Bach_Nguyet.frmBanHang.resources
+C:\Users\moder\quanan_BachNguyet\bin\Debug\DevComponents.DotNetBar.SuperGrid.dll
+C:\Users\moder\quanan_BachNguyet\bin\Debug\DevComponents.Instrumentation.dll
+C:\Users\moder\quanan_BachNguyet\bin\Debug\DevComponents.DotNetBar.SuperGrid.xml
+C:\Users\moder\quanan_BachNguyet\bin\Debug\DevComponents.Instrumentation.xml
+C:\Users\moder\quanan_BachNguyet\obj\Debug\quan_an_Bach_Nguyet.Components.Widget.resources
+C:\Users\moder\quanan_BachNguyet\bin\Debug\EntityFramework.dll
+C:\Users\moder\quanan_BachNguyet\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\moder\quanan_BachNguyet\bin\Debug\EntityFramework.xml
+C:\Users\moder\quanan_BachNguyet\bin\Debug\EntityFramework.SqlServer.xml
