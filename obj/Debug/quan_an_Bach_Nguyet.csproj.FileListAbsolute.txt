@@ -23,3 +23,7 @@ C:\Users\moder\quanan_BachNguyet\bin\Debug\EntityFramework.dll
 C:\Users\moder\quanan_BachNguyet\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\moder\quanan_BachNguyet\bin\Debug\EntityFramework.xml
 C:\Users\moder\quanan_BachNguyet\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\moder\quanan_BachNguyet\obj\Debug\quan_an_Bach_Nguyet.frmQuanLyHoaDon.resources
+C:\Users\moder\quanan_BachNguyet\obj\Debug\quan_an_Bach_Nguyet.frmQuanLyNhanVien.resources
+C:\Users\moder\quanan_BachNguyet\obj\Debug\quan_an_Bach_Nguyet.frmQuanLyMenu.resources
+C:\Users\moder\quanan_BachNguyet\bin\Debug\Rijndael256.dll

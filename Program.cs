@@ -16,7 +16,7 @@ namespace quan_an_Bach_Nguyet
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmDangNhap());
+            Application.Run(new frmTrangChu());
         }
     }
 }

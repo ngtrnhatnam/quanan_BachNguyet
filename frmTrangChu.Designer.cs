@@ -37,6 +37,9 @@
             this.ribbonBar2 = new DevComponents.DotNetBar.RibbonBar();
             this.btnSelling = new DevComponents.DotNetBar.ButtonItem();
             this.ribbonPanel2 = new DevComponents.DotNetBar.RibbonPanel();
+            this.ribbonBar1 = new DevComponents.DotNetBar.RibbonBar();
+            this.btnMenuEdit = new DevComponents.DotNetBar.ButtonItem();
+            this.buttonItem15 = new DevComponents.DotNetBar.ButtonItem();
             this.applicationButton1 = new DevComponents.DotNetBar.ApplicationButton();
             this.itemContainer1 = new DevComponents.DotNetBar.ItemContainer();
             this.itemContainer2 = new DevComponents.DotNetBar.ItemContainer();
@@ -62,13 +65,14 @@
             this.qatCustomizeItem1 = new DevComponents.DotNetBar.QatCustomizeItem();
             this.lblTime = new System.Windows.Forms.Label();
             this.pcbConnection = new System.Windows.Forms.PictureBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.superTooltip1 = new DevComponents.DotNetBar.SuperTooltip();
             this.internet_Check = new System.Windows.Forms.Timer(this.components);
+            this.panel1 = new System.Windows.Forms.Panel();
             this.ribbonControl1.SuspendLayout();
             this.ribbonPanel1.SuspendLayout();
+            this.ribbonPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pcbConnection)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // styleManager
@@ -99,11 +103,12 @@
             this.ribbonTabItem2});
             this.ribbonControl1.KeyTipsFont = new System.Drawing.Font("Tahoma", 7F);
             this.ribbonControl1.Location = new System.Drawing.Point(5, 1);
+            this.ribbonControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.QuickToolbarItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.buttonItem1,
             this.qatCustomizeItem1});
-            this.ribbonControl1.Size = new System.Drawing.Size(1122, 154);
+            this.ribbonControl1.Size = new System.Drawing.Size(1082, 154);
             this.ribbonControl1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.ribbonControl1.SystemText.MaximizeRibbonText = "&Maximize the Ribbon";
             this.ribbonControl1.SystemText.MinimizeRibbonText = "Mi&nimize the Ribbon";
@@ -131,10 +136,11 @@
             this.ribbonPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.ribbonPanel1.Controls.Add(this.ribbonBar2);
             this.ribbonPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ribbonPanel1.Location = new System.Drawing.Point(0, 56);
+            this.ribbonPanel1.Location = new System.Drawing.Point(0, 58);
+            this.ribbonPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ribbonPanel1.Name = "ribbonPanel1";
-            this.ribbonPanel1.Padding = new System.Windows.Forms.Padding(3, 0, 3, 3);
-            this.ribbonPanel1.Size = new System.Drawing.Size(1122, 98);
+            this.ribbonPanel1.Padding = new System.Windows.Forms.Padding(3, 0, 3, 2);
+            this.ribbonPanel1.Size = new System.Drawing.Size(1082, 96);
             // 
             // 
             // 
@@ -166,8 +172,9 @@
             this.ribbonBar2.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.btnSelling});
             this.ribbonBar2.Location = new System.Drawing.Point(3, 0);
+            this.ribbonBar2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ribbonBar2.Name = "ribbonBar2";
-            this.ribbonBar2.Size = new System.Drawing.Size(60, 95);
+            this.ribbonBar2.Size = new System.Drawing.Size(60, 94);
             this.ribbonBar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.ribbonBar2.TabIndex = 1;
             // 
@@ -192,11 +199,13 @@
             // ribbonPanel2
             // 
             this.ribbonPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.ribbonPanel2.Controls.Add(this.ribbonBar1);
             this.ribbonPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ribbonPanel2.Location = new System.Drawing.Point(0, 0);
+            this.ribbonPanel2.Location = new System.Drawing.Point(0, 69);
+            this.ribbonPanel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ribbonPanel2.Name = "ribbonPanel2";
             this.ribbonPanel2.Padding = new System.Windows.Forms.Padding(3, 0, 3, 2);
-            this.ribbonPanel2.Size = new System.Drawing.Size(75, 20);
+            this.ribbonPanel2.Size = new System.Drawing.Size(1103, 85);
             // 
             // 
             // 
@@ -210,6 +219,53 @@
             // 
             this.ribbonPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.ribbonPanel2.TabIndex = 2;
+            this.ribbonPanel2.Visible = false;
+            // 
+            // ribbonBar1
+            // 
+            this.ribbonBar1.AutoOverflowEnabled = true;
+            // 
+            // 
+            // 
+            this.ribbonBar1.BackgroundMouseOverStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // 
+            // 
+            this.ribbonBar1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.ribbonBar1.ContainerControlProcessDialogKey = true;
+            this.ribbonBar1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.ribbonBar1.DragDropSupport = true;
+            this.ribbonBar1.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.btnMenuEdit,
+            this.buttonItem15});
+            this.ribbonBar1.Location = new System.Drawing.Point(3, 0);
+            this.ribbonBar1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ribbonBar1.Name = "ribbonBar1";
+            this.ribbonBar1.Size = new System.Drawing.Size(149, 83);
+            this.ribbonBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.ribbonBar1.TabIndex = 0;
+            this.ribbonBar1.Text = "Quán ăn";
+            // 
+            // 
+            // 
+            this.ribbonBar1.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // 
+            // 
+            this.ribbonBar1.TitleStyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // btnMenuEdit
+            // 
+            this.btnMenuEdit.Name = "btnMenuEdit";
+            this.btnMenuEdit.SubItemsExpandWidth = 14;
+            this.btnMenuEdit.Text = "Thực đơn";
+            this.btnMenuEdit.Click += new System.EventHandler(this.btnMenuEdit_Click);
+            // 
+            // buttonItem15
+            // 
+            this.buttonItem15.Name = "buttonItem15";
+            this.buttonItem15.SubItemsExpandWidth = 14;
+            this.buttonItem15.Text = "Kho hàng";
             // 
             // applicationButton1
             // 
@@ -445,7 +501,7 @@
             // 
             this.ribbonTabItem2.Name = "ribbonTabItem2";
             this.ribbonTabItem2.Panel = this.ribbonPanel2;
-            this.ribbonTabItem2.Text = "ribbonTabItem2";
+            this.ribbonTabItem2.Text = "Quản lý";
             // 
             // buttonItem1
             // 
@@ -458,37 +514,26 @@
             // 
             // lblTime
             // 
+            this.lblTime.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lblTime.AutoSize = true;
             this.lblTime.BackColor = System.Drawing.Color.White;
-            this.lblTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.lblTime.Location = new System.Drawing.Point(6, 18);
+            this.lblTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.lblTime.Location = new System.Drawing.Point(3, 5);
             this.lblTime.Name = "lblTime";
-            this.lblTime.Size = new System.Drawing.Size(90, 22);
+            this.lblTime.Size = new System.Drawing.Size(82, 20);
             this.lblTime.TabIndex = 3;
             this.lblTime.Text = "Thời gian:";
             this.lblTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // pcbConnection
             // 
-            this.pcbConnection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pcbConnection.Location = new System.Drawing.Point(195, 12);
+            this.pcbConnection.Location = new System.Drawing.Point(191, 2);
+            this.pcbConnection.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pcbConnection.Name = "pcbConnection";
-            this.pcbConnection.Size = new System.Drawing.Size(35, 35);
+            this.pcbConnection.Size = new System.Drawing.Size(34, 25);
             this.pcbConnection.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pcbConnection.TabIndex = 3;
             this.pcbConnection.TabStop = false;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.pcbConnection);
-            this.groupBox1.Controls.Add(this.lblTime);
-            this.groupBox1.Location = new System.Drawing.Point(864, 161);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(241, 52);
-            this.groupBox1.TabIndex = 3;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Thông tin";
             // 
             // superTooltip1
             // 
@@ -500,15 +545,26 @@
             this.internet_Check.Interval = 1000;
             this.internet_Check.Tick += new System.EventHandler(this.internet_Check_Tick);
             // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.lblTime);
+            this.panel1.Controls.Add(this.pcbConnection);
+            this.panel1.Location = new System.Drawing.Point(828, 160);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(235, 29);
+            this.panel1.TabIndex = 7;
+            // 
             // frmTrangChu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1132, 696);
+            this.ClientSize = new System.Drawing.Size(1092, 599);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.ribbonControl1);
-            this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "frmTrangChu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Trang chủ";
@@ -517,9 +573,10 @@
             this.ribbonControl1.ResumeLayout(false);
             this.ribbonControl1.PerformLayout();
             this.ribbonPanel1.ResumeLayout(false);
+            this.ribbonPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pcbConnection)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -557,9 +614,12 @@
         private DevComponents.DotNetBar.QatCustomizeItem qatCustomizeItem1;
         private System.Windows.Forms.Label lblTime;
         private System.Windows.Forms.PictureBox pcbConnection;
-        private System.Windows.Forms.GroupBox groupBox1;
         private DevComponents.DotNetBar.SuperTooltip superTooltip1;
         private System.Windows.Forms.Timer internet_Check;
+        private DevComponents.DotNetBar.RibbonBar ribbonBar1;
+        private DevComponents.DotNetBar.ButtonItem btnMenuEdit;
+        private DevComponents.DotNetBar.ButtonItem buttonItem15;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 
