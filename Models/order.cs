@@ -19,8 +19,6 @@ namespace quan_an_Bach_Nguyet.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int order_id { get; set; }
 
-        public int table_number { get; set; }
-
         public DateTime order_date { get; set; }
 
         public bool status { get; set; }

@@ -27,3 +27,6 @@ C:\Users\moder\quanan_BachNguyet\obj\Debug\quan_an_Bach_Nguyet.frmQuanLyHoaDon.r
 C:\Users\moder\quanan_BachNguyet\obj\Debug\quan_an_Bach_Nguyet.frmQuanLyNhanVien.resources
 C:\Users\moder\quanan_BachNguyet\obj\Debug\quan_an_Bach_Nguyet.frmQuanLyMenu.resources
 C:\Users\moder\quanan_BachNguyet\bin\Debug\Rijndael256.dll
+C:\Users\moder\quanan_BachNguyet\bin\Debug\Newtonsoft.Json.dll
+C:\Users\moder\quanan_BachNguyet\bin\Debug\Newtonsoft.Json.xml
+C:\Users\moder\quanan_BachNguyet\obj\Debug\quan_an_Bach_Nguyet.frmQR.resources

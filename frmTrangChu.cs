@@ -98,34 +98,21 @@ namespace quan_an_Bach_Nguyet
             editMenu.MaximizeBox = editMenu.MinimizeBox = false;
         }
 
-        //private void button1_Click(object sender, EventArgs e)
-        //{
-        //    string bankCode = "VCB";        // Mã ngân hàng (VD: VCB, TCB)
-        //    string accountNumber = "0123456";    // Số tài khoản
-        //    string amount = "30000";            // Số tiền
-        //    string description = "TEXT";  // Nội dung chuyển khoản
+        private void btnNhanVien_Click(object sender, EventArgs e)
+        {
+            frmQuanLyNhanVien employee = new frmQuanLyNhanVien();
 
-        //    // Tạo nội dung QR theo chuẩn VietQR
-        //    string qrContent = GenerateVietQRContent(bankCode, accountNumber, amount, description);
+            foreach (Form child in MdiChildren)
+            {
+                child.Close();
+            }
 
-        //    // Tạo QR Code
-        //    GenerateQRCode("00020101021238540010A00000072701240006970418011064207734260208QRIBFTTA5303704540410005802VN62080804Dat16304A632");
-        //}
-
-        //    private string GenerateVietQRContent(string bankCode, string accountNumber, string amount, string description)
-        //    {
-        //        // Giả lập cấu trúc VietQR đơn giản
-        //        return $"bank:{bankCode}|acc:{accountNumber}|amt:{amount}|desc:{description}";
-        //    }
-
-        //private void GenerateQRCode(string content)
-        //{
-        //    QRCodeGenerator qrGenerator = new QRCodeGenerator();
-        //    QRCodeData qrCodeData = qrGenerator.CreateQrCode(content, QRCodeGenerator.ECCLevel.Q);
-        //    QRCode qrCode = new QRCode(qrCodeData);
-
-        //    // Hiển thị QR Code lên PictureBox
-        //    picQrCode.Image = qrCode.GetGraphic(10);
-        //}
+            // Define Mdi parent form
+            employee.MdiParent = this;
+            employee.Dock = DockStyle.Fill;
+            employee.Show();
+            employee.WindowState = FormWindowState.Maximized;
+            employee.MaximizeBox = employee.MinimizeBox = false;
+        }
     }
 }

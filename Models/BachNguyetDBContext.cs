@@ -35,7 +35,7 @@ namespace quan_an_Bach_Nguyet.Models
 
             modelBuilder.Entity<bill>()
                 .Property(e => e.total_amount)
-                .HasPrecision(10, 2);
+                .HasPrecision(10, 0);
 
             modelBuilder.Entity<bill>()
                 .Property(e => e.payment_method)
@@ -47,7 +47,8 @@ namespace quan_an_Bach_Nguyet.Models
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<employee>()
-                .Property(e => e.position)
+                .Property(e => e.cccd)
+                .IsFixedLength()
                 .IsUnicode(false);
 
             modelBuilder.Entity<employee>()
@@ -61,7 +62,7 @@ namespace quan_an_Bach_Nguyet.Models
 
             modelBuilder.Entity<employee>()
                 .Property(e => e.salary)
-                .HasPrecision(10, 2);
+                .HasPrecision(10, 0);
 
             modelBuilder.Entity<employee>()
                 .HasMany(e => e.attendances)
@@ -107,7 +108,7 @@ namespace quan_an_Bach_Nguyet.Models
 
             modelBuilder.Entity<menu_items>()
                 .Property(e => e.price)
-                .HasPrecision(10, 2);
+                .HasPrecision(10, 0);
 
             modelBuilder.Entity<menu_items>()
                 .HasMany(e => e.order_detail)
@@ -116,7 +117,7 @@ namespace quan_an_Bach_Nguyet.Models
 
             modelBuilder.Entity<order_detail>()
                 .Property(e => e.subtotal)
-                .HasPrecision(10, 2);
+                .HasPrecision(10, 0);
 
             modelBuilder.Entity<order>()
                 .HasMany(e => e.bills)
@@ -130,7 +131,7 @@ namespace quan_an_Bach_Nguyet.Models
 
             modelBuilder.Entity<payroll>()
                 .Property(e => e.base_salary)
-                .HasPrecision(10, 2);
+                .HasPrecision(10, 0);
 
             modelBuilder.Entity<payroll>()
                 .Property(e => e.total_hours)
@@ -142,31 +143,31 @@ namespace quan_an_Bach_Nguyet.Models
 
             modelBuilder.Entity<payroll>()
                 .Property(e => e.deductions)
-                .HasPrecision(10, 2);
+                .HasPrecision(10, 0);
 
             modelBuilder.Entity<payroll>()
                 .Property(e => e.bonus)
-                .HasPrecision(10, 2);
+                .HasPrecision(10, 0);
 
             modelBuilder.Entity<payroll>()
                 .Property(e => e.total)
-                .HasPrecision(10, 2);
+                .HasPrecision(10, 0);
 
             modelBuilder.Entity<purchase_order_details>()
                 .Property(e => e.quantity)
-                .HasPrecision(10, 2);
+                .HasPrecision(5, 2);
 
             modelBuilder.Entity<purchase_order_details>()
                 .Property(e => e.unit_price)
-                .HasPrecision(10, 2);
+                .HasPrecision(10, 0);
 
             modelBuilder.Entity<purchase_order_details>()
                 .Property(e => e.subtotal)
-                .HasPrecision(10, 2);
+                .HasPrecision(10, 0);
 
             modelBuilder.Entity<purchase_orders>()
                 .Property(e => e.total_cost)
-                .HasPrecision(10, 2);
+                .HasPrecision(10, 0);
 
             modelBuilder.Entity<purchase_orders>()
                 .HasMany(e => e.purchase_order_details)

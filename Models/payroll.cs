@@ -23,11 +23,11 @@ namespace quan_an_Bach_Nguyet.Models
 
         public decimal total_hours { get; set; }
 
-        public decimal? overtime_hours { get; set; }
+        public decimal overtime_hours { get; set; }
 
-        public decimal? deductions { get; set; }
+        public decimal deductions { get; set; }
 
-        public decimal? bonus { get; set; }
+        public decimal bonus { get; set; }
 
         public decimal total { get; set; }
 
