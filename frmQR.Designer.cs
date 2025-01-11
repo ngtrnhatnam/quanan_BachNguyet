@@ -33,6 +33,9 @@
             this.button2 = new System.Windows.Forms.Button();
             this.ptbQR = new System.Windows.Forms.PictureBox();
             this.lblTotal = new System.Windows.Forms.Label();
+            this.lblBillID = new System.Windows.Forms.Label();
+            this.lblPaymentDay = new System.Windows.Forms.Label();
+            this.lblEmployeeID = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.ptbQR)).BeginInit();
             this.SuspendLayout();
             // 
@@ -81,15 +84,48 @@
             this.lblTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.lblTotal.Location = new System.Drawing.Point(443, 50);
             this.lblTotal.Name = "lblTotal";
-            this.lblTotal.Size = new System.Drawing.Size(186, 22);
+            this.lblTotal.Size = new System.Drawing.Size(191, 22);
             this.lblTotal.TabIndex = 4;
-            this.lblTotal.Text = "Tổng phải thanh toán:";
+            this.lblTotal.Text = "Tổng phải thanh toán: ";
+            // 
+            // lblBillID
+            // 
+            this.lblBillID.AutoSize = true;
+            this.lblBillID.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.lblBillID.Location = new System.Drawing.Point(443, 111);
+            this.lblBillID.Name = "lblBillID";
+            this.lblBillID.Size = new System.Drawing.Size(112, 22);
+            this.lblBillID.TabIndex = 5;
+            this.lblBillID.Text = "Số hóa đơn: ";
+            // 
+            // lblPaymentDay
+            // 
+            this.lblPaymentDay.AutoSize = true;
+            this.lblPaymentDay.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.lblPaymentDay.Location = new System.Drawing.Point(443, 172);
+            this.lblPaymentDay.Name = "lblPaymentDay";
+            this.lblPaymentDay.Size = new System.Drawing.Size(152, 22);
+            this.lblPaymentDay.TabIndex = 6;
+            this.lblPaymentDay.Text = "Ngày thanh toán: ";
+            // 
+            // lblEmployeeID
+            // 
+            this.lblEmployeeID.AutoSize = true;
+            this.lblEmployeeID.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.lblEmployeeID.Location = new System.Drawing.Point(443, 233);
+            this.lblEmployeeID.Name = "lblEmployeeID";
+            this.lblEmployeeID.Size = new System.Drawing.Size(210, 22);
+            this.lblEmployeeID.TabIndex = 7;
+            this.lblEmployeeID.Text = "ID nhân viên thanh toán: ";
             // 
             // frmQR
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lblEmployeeID);
+            this.Controls.Add(this.lblPaymentDay);
+            this.Controls.Add(this.lblBillID);
             this.Controls.Add(this.lblTotal);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -113,5 +149,8 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label lblTotal;
+        private System.Windows.Forms.Label lblBillID;
+        private System.Windows.Forms.Label lblPaymentDay;
+        private System.Windows.Forms.Label lblEmployeeID;
     }
 }

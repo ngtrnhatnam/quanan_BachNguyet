@@ -9,11 +9,13 @@ namespace quan_an_Bach_Nguyet.Models
     public partial class purchase_order_details
     {
         [Key]
+        [Column(Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int pod_id { get; set; }
-
         public int po_id { get; set; }
 
+        [Key]
+        [Column(Order = 1)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ingredient_id { get; set; }
 
         public decimal quantity { get; set; }

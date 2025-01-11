@@ -1,9 +1,15 @@
 ﻿using DevComponents.DotNetBar.Controls;
+using DevComponents.WinForms.Drawing;
 using quan_an_Bach_Nguyet.Components;
+using quan_an_Bach_Nguyet.Models;
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Documents;
 using System.Windows.Forms;
 
@@ -11,14 +17,17 @@ namespace quan_an_Bach_Nguyet
 {
     public partial class frmBanHang : Form
     {
-        public frmBanHang()
+        private int _employee_id;
+        public frmBanHang(int employee_id)
         {
             InitializeComponent();
+            _employee_id = employee_id;
         }
 
         private void LoadData(object sender, EventArgs e)
         {
             SqlConnection conn = new SqlConnection(@"Data source=MSI;initial catalog=BachNguyet;integrated security=True");
+            LoadBillID();
             String querry = "SELECT menuitem_id, name, price, availability FROM menu_items";
             try
             {
@@ -107,7 +116,7 @@ namespace quan_an_Bach_Nguyet
                         dgvOrder.Rows[rowIndex].Selected = true;
                     }
                     total += gia;
-                    txtTongCong.Text = total.ToString();
+                    txtTongCong.Text = total.ToString("");
                     txtSoLuong.Text = soluong.ToString();
                 }
             }
@@ -171,13 +180,17 @@ namespace quan_an_Bach_Nguyet
                     MessageBox.Show("Hoàn tất hóa đơn!");
                     dgvOrder.Rows.Clear();
                     dgvOrder.Refresh();
+                    SaveToDB("Cash");
+                    LoadBillID();
                     txtTongCong.Text = txtSoLuong.Text = "0";
+                    
                 }
             }
             else if(rdbBanking.Checked == true)
             {
                 decimal total = Convert.ToDecimal(txtTongCong.Text);
-                frmQR createQR = new frmQR(total);
+                int bill_id = int.Parse(txtBillID.Text);
+                frmQR createQR = new frmQR(total, bill_id, _employee_id);
                 createQR.ShowDialog();
             }
         }
@@ -193,6 +206,119 @@ namespace quan_an_Bach_Nguyet
             {
                 btnThanhToan.Enabled = true;
                 lblNothing.Visible = false;
+            }
+        }
+
+        private void SaveToDB(string method)
+        {
+            try
+            {
+
+                using (var context = new BachNguyetDBContext())
+                {
+
+                    // Kiểm tra employee_id có tồn tại không
+                    if (!context.employees.Any(e => e.employee_id == _employee_id))
+                    {
+                        MessageBox.Show("Employee ID không tồn tại. Vui lòng kiểm tra lại!");
+                        return;
+                    }
+
+                    order _order = new order
+                    {
+                        order_id = int.Parse(txtBillID.Text),
+                        order_date = DateTime.Now,
+                        employee_id = _employee_id,
+                    };
+                    context.orders.Add(_order);
+                    context.SaveChanges();
+
+                    bill _bill = new bill
+                    {
+                        payment_date = DateTime.Now,
+                        total_amount = Convert.ToDecimal(txtTongCong.Text),
+                        payment_method = method,
+                        order_id = int.Parse(txtBillID.Text),
+                        employee_id = _employee_id
+                    };
+
+                    // Thêm xuống vào table
+                    //context.order_details.AddRange(orderDetails);
+                    context.bills.Add(_bill);
+                    // Lưu xuống database
+                    context.SaveChanges();
+                    SaveOrderDetail();
+                }
+            }
+            catch (DbUpdateException dbEx)
+            {
+                MessageBox.Show(dbEx.InnerException?.InnerException?.Message ?? dbEx.Message, "Lỗi khi lưu dữ liệu!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi lưu: {ex.Message}");
+            }
+        }
+
+        private void SaveOrderDetail()
+        {
+            try
+            {
+                //Danh sách để chứa các chi tiết đơn hàng
+                using (var context = new BachNguyetDBContext())
+                {
+                    List<order_details> orderDetails = new List<order_details>();
+                    for (int i = 0; i < dgvOrder.Rows.Count; i++)
+                    {
+                        var menuItemId = int.Parse(dgvOrder.Rows[i].Cells["colMaMon"].Value?.ToString() ?? "0");
+                        var price = decimal.Parse(dgvOrder.Rows[i].Cells["colGiaMon"].Value?.ToString() ?? "0");
+                        var quantity = int.Parse(dgvOrder.Rows[i].Cells["colSoLuong"].Value?.ToString() ?? "0");
+                        var subtotal = decimal.Parse(dgvOrder.Rows[i].Cells["colTongCong"].Value?.ToString() ?? "0");
+                        if (menuItemId > 0 && price > 0 && quantity > 0 && subtotal > 0)
+                        {
+                            order_details _order_detail = new order_details
+                            {
+                                order_id = int.Parse(txtBillID.Text),
+                                menuitem_id = menuItemId,
+                                price = price,
+                                quantity = quantity,
+                                subtotal = subtotal,
+                            };
+
+                            // Thêm đối tượng vào danh sách
+                            orderDetails.Add(_order_detail);
+                        }
+                    }
+                    context.order_details.AddRange(orderDetails);
+                    context.SaveChanges();
+                }
+            }
+            catch (DbUpdateException dbEx)
+            {
+                MessageBox.Show(dbEx.InnerException?.InnerException?.Message ?? dbEx.Message, "Lỗi khi lưu dữ liệu!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi lưu: {ex.Message}");
+            }
+        }
+
+
+        private void LoadBillID()
+        {
+            try
+            {
+                // Đại diện cho database
+                BachNguyetDBContext context = new BachNguyetDBContext();
+
+                // Lấy danh sách order
+                List<order> _orders = context.orders.ToList();
+                int count = _orders.Count;
+                txtBillID.Text = (count+1).ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }

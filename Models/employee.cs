@@ -12,7 +12,7 @@ namespace quan_an_Bach_Nguyet.Models
         public employee()
         {
             attendances = new HashSet<attendance>();
-            orders = new HashSet<order>();
+            bills = new HashSet<bill>();
             payrolls = new HashSet<payroll>();
             purchase_orders = new HashSet<purchase_orders>();
             users = new HashSet<user>();
@@ -49,13 +49,16 @@ namespace quan_an_Bach_Nguyet.Models
         public bool status { get; set; }
 
         [Column(TypeName = "image")]
+        [Required]
         public byte[] picture { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<attendance> attendances { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<order> orders { get; set; }
+        public virtual ICollection<bill> bills { get; set; }
+
+        public virtual order order { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<payroll> payrolls { get; set; }

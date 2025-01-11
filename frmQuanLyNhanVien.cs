@@ -263,17 +263,19 @@ namespace quan_an_Bach_Nguyet
                 {
 
                     // Thêm nhân viên mới
-                    employee _employee = new employee();
-                    _employee.employee_id = int.Parse(txt_MaNV.Text);
-                    _employee.fullname = txt_TenNV.Text;
-                    _employee.cccd = txtCCCD.Text;
-                    _employee.position = txtChucVu.Text;
-                    _employee.phonenumber = txt_SDT.Text;
-                    _employee.email = txt_Email.Text;
-                    _employee.hire_date = DateTime.Now;
-                    _employee.salary = decimal.Parse(txtLuongCoBan.Text);
-                    _employee.picture = imageBytes;
-                    _employee.status = true;
+                    employee _employee = new employee
+                    {
+                        employee_id = int.Parse(txt_MaNV.Text),
+                        fullname = txt_TenNV.Text,
+                        cccd = txtCCCD.Text,
+                        position = txtChucVu.Text,
+                        phonenumber = txt_SDT.Text,
+                        email = txt_Email.Text,
+                        hire_date = DateTime.Now,
+                        salary = decimal.Parse(txtLuongCoBan.Text),
+                        picture = imageBytes,
+                        status = true
+                    };
 
 
                     // Thêm xuống vào table

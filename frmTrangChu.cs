@@ -20,9 +20,13 @@ namespace quan_an_Bach_Nguyet
 {
     public partial class frmTrangChu : DevComponents.DotNetBar.RibbonForm
     {
-        public frmTrangChu()
+        public int _employee_id;
+        public bool _permission;
+        public frmTrangChu(int employee_id, bool permission)
         {
             InitializeComponent();
+            _employee_id = employee_id;
+            _permission = permission;
         }
 
         // Kiểm tra tình trạng mạng trên một luồng riêng
@@ -48,7 +52,7 @@ namespace quan_an_Bach_Nguyet
         private void btnSelling_Click(object sender, EventArgs e)
         {
             // Child form
-            frmBanHang selling = new frmBanHang();
+            frmBanHang selling = new frmBanHang(_employee_id);
 
             foreach (Form child in MdiChildren) {
                 child.Close();

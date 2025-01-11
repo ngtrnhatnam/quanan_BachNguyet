@@ -18,7 +18,7 @@ namespace quan_an_Bach_Nguyet.Models
         public virtual DbSet<employee> employees { get; set; }
         public virtual DbSet<ingredient> ingredients { get; set; }
         public virtual DbSet<menu_items> menu_items { get; set; }
-        public virtual DbSet<order_detail> order_detail { get; set; }
+        public virtual DbSet<order_details> order_details { get; set; }
         public virtual DbSet<order> orders { get; set; }
         public virtual DbSet<payroll> payrolls { get; set; }
         public virtual DbSet<purchase_order_details> purchase_order_details { get; set; }
@@ -70,9 +70,13 @@ namespace quan_an_Bach_Nguyet.Models
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<employee>()
-                .HasMany(e => e.orders)
+                .HasMany(e => e.bills)
                 .WithRequired(e => e.employee)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<employee>()
+                .HasOptional(e => e.order)
+                .WithRequired(e => e.employee);
 
             modelBuilder.Entity<employee>()
                 .HasMany(e => e.payrolls)
@@ -111,11 +115,15 @@ namespace quan_an_Bach_Nguyet.Models
                 .HasPrecision(10, 0);
 
             modelBuilder.Entity<menu_items>()
-                .HasMany(e => e.order_detail)
+                .HasMany(e => e.order_details)
                 .WithRequired(e => e.menu_items)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<order_detail>()
+            modelBuilder.Entity<order_details>()
+                .Property(e => e.price)
+                .HasPrecision(10, 0);
+
+            modelBuilder.Entity<order_details>()
                 .Property(e => e.subtotal)
                 .HasPrecision(10, 0);
 
@@ -125,7 +133,7 @@ namespace quan_an_Bach_Nguyet.Models
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<order>()
-                .HasMany(e => e.order_detail)
+                .HasMany(e => e.order_details)
                 .WithRequired(e => e.order)
                 .WillCascadeOnDelete(false);
 

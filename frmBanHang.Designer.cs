@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmBanHang));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -38,13 +38,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.panel10 = new System.Windows.Forms.Panel();
             this.dgvOrder = new System.Windows.Forms.DataGridView();
-            this.colSTT = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMaMon = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTenMon = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colGiaMon = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSoLuong = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTongCong = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel12 = new System.Windows.Forms.Panel();
+            this.txtBillID = new System.Windows.Forms.TextBox();
             this.btnXoa = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
             this.panel11 = new System.Windows.Forms.Panel();
@@ -75,6 +70,12 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnAll = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.colSTT = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMaMon = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTenMon = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colGiaMon = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSoLuong = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTongCong = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel10.SuspendLayout();
@@ -137,11 +138,11 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.label2.Location = new System.Drawing.Point(3, 7);
+            this.label2.Location = new System.Drawing.Point(3, 8);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(171, 21);
+            this.label2.Size = new System.Drawing.Size(117, 21);
             this.label2.TabIndex = 0;
-            this.label2.Text = "Đơn hàng hiện tại:";
+            this.label2.Text = "Hóa đơn số:";
             // 
             // panel10
             // 
@@ -171,81 +172,48 @@
             this.colGiaMon,
             this.colSoLuong,
             this.colTongCong});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvOrder.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvOrder.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvOrder.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvOrder.Location = new System.Drawing.Point(0, 33);
+            this.dgvOrder.Location = new System.Drawing.Point(0, 38);
             this.dgvOrder.MultiSelect = false;
             this.dgvOrder.Name = "dgvOrder";
             this.dgvOrder.ReadOnly = true;
             this.dgvOrder.RowHeadersVisible = false;
             this.dgvOrder.RowHeadersWidth = 51;
             this.dgvOrder.RowTemplate.Height = 30;
-            this.dgvOrder.Size = new System.Drawing.Size(539, 464);
+            this.dgvOrder.Size = new System.Drawing.Size(539, 459);
             this.dgvOrder.TabIndex = 5;
             this.dgvOrder.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrder_CellClick);
-            // 
-            // colSTT
-            // 
-            this.colSTT.FillWeight = 35F;
-            this.colSTT.HeaderText = "STT";
-            this.colSTT.MinimumWidth = 6;
-            this.colSTT.Name = "colSTT";
-            this.colSTT.ReadOnly = true;
-            // 
-            // colMaMon
-            // 
-            this.colMaMon.HeaderText = "ID";
-            this.colMaMon.MinimumWidth = 6;
-            this.colMaMon.Name = "colMaMon";
-            this.colMaMon.ReadOnly = true;
-            this.colMaMon.Visible = false;
-            // 
-            // colTenMon
-            // 
-            this.colTenMon.HeaderText = "Món";
-            this.colTenMon.MinimumWidth = 6;
-            this.colTenMon.Name = "colTenMon";
-            this.colTenMon.ReadOnly = true;
-            // 
-            // colGiaMon
-            // 
-            this.colGiaMon.HeaderText = "Giá món";
-            this.colGiaMon.MinimumWidth = 6;
-            this.colGiaMon.Name = "colGiaMon";
-            this.colGiaMon.ReadOnly = true;
-            // 
-            // colSoLuong
-            // 
-            this.colSoLuong.HeaderText = "Số lượng";
-            this.colSoLuong.MinimumWidth = 6;
-            this.colSoLuong.Name = "colSoLuong";
-            this.colSoLuong.ReadOnly = true;
-            // 
-            // colTongCong
-            // 
-            this.colTongCong.HeaderText = "Tổng cộng";
-            this.colTongCong.MinimumWidth = 6;
-            this.colTongCong.Name = "colTongCong";
-            this.colTongCong.ReadOnly = true;
             // 
             // panel12
             // 
             this.panel12.BackColor = System.Drawing.Color.White;
+            this.panel12.Controls.Add(this.txtBillID);
             this.panel12.Controls.Add(this.btnXoa);
             this.panel12.Controls.Add(this.btnClear);
             this.panel12.Controls.Add(this.label2);
             this.panel12.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel12.Location = new System.Drawing.Point(0, 0);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(539, 33);
+            this.panel12.Size = new System.Drawing.Size(539, 38);
             this.panel12.TabIndex = 4;
+            // 
+            // txtBillID
+            // 
+            this.txtBillID.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtBillID.Enabled = false;
+            this.txtBillID.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.txtBillID.Location = new System.Drawing.Point(126, 8);
+            this.txtBillID.Name = "txtBillID";
+            this.txtBillID.Size = new System.Drawing.Size(76, 21);
+            this.txtBillID.TabIndex = 3;
             // 
             // btnXoa
             // 
@@ -568,6 +536,50 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(188, 655);
             this.flowLayoutPanel1.TabIndex = 1;
             // 
+            // colSTT
+            // 
+            this.colSTT.FillWeight = 35F;
+            this.colSTT.HeaderText = "STT";
+            this.colSTT.MinimumWidth = 6;
+            this.colSTT.Name = "colSTT";
+            this.colSTT.ReadOnly = true;
+            // 
+            // colMaMon
+            // 
+            this.colMaMon.HeaderText = "ID";
+            this.colMaMon.MinimumWidth = 6;
+            this.colMaMon.Name = "colMaMon";
+            this.colMaMon.ReadOnly = true;
+            this.colMaMon.Visible = false;
+            // 
+            // colTenMon
+            // 
+            this.colTenMon.HeaderText = "Món";
+            this.colTenMon.MinimumWidth = 6;
+            this.colTenMon.Name = "colTenMon";
+            this.colTenMon.ReadOnly = true;
+            // 
+            // colGiaMon
+            // 
+            this.colGiaMon.HeaderText = "Giá món";
+            this.colGiaMon.MinimumWidth = 6;
+            this.colGiaMon.Name = "colGiaMon";
+            this.colGiaMon.ReadOnly = true;
+            // 
+            // colSoLuong
+            // 
+            this.colSoLuong.HeaderText = "Số lượng";
+            this.colSoLuong.MinimumWidth = 6;
+            this.colSoLuong.Name = "colSoLuong";
+            this.colSoLuong.ReadOnly = true;
+            // 
+            // colTongCong
+            // 
+            this.colTongCong.HeaderText = "Tổng cộng";
+            this.colTongCong.MinimumWidth = 6;
+            this.colTongCong.Name = "colTongCong";
+            this.colTongCong.ReadOnly = true;
+            // 
             // frmBanHang
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -625,12 +637,6 @@
         private System.Windows.Forms.RadioButton rdbBanking;
         private System.Windows.Forms.DataGridView dgvOrder;
         private System.Windows.Forms.Panel panel12;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colSTT;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colMaMon;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colTenMon;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colGiaMon;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colSoLuong;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colTongCong;
         private System.Windows.Forms.TextBox txtSoLuong;
         private System.Windows.Forms.TextBox txtTongCong;
         private System.Windows.Forms.Button btnXoa;
@@ -654,5 +660,12 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnAll;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.TextBox txtBillID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colSTT;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colMaMon;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTenMon;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colGiaMon;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colSoLuong;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTongCong;
     }
 }

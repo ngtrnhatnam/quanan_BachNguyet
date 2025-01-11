@@ -12,16 +12,13 @@ namespace quan_an_Bach_Nguyet.Models
         public order()
         {
             bills = new HashSet<bill>();
-            order_detail = new HashSet<order_detail>();
+            order_details = new HashSet<order_details>();
         }
 
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int order_id { get; set; }
 
         public DateTime order_date { get; set; }
-
-        public bool status { get; set; }
 
         public int employee_id { get; set; }
 
@@ -31,6 +28,6 @@ namespace quan_an_Bach_Nguyet.Models
         public virtual employee employee { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<order_detail> order_detail { get; set; }
+        public virtual ICollection<order_details> order_details { get; set; }
     }
 }

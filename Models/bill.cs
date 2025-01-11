@@ -9,18 +9,21 @@ namespace quan_an_Bach_Nguyet.Models
     public partial class bill
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int bill_id { get; set; }
 
-        public int order_id { get; set; }
+        public DateTime payment_date { get; set; }
 
         public decimal total_amount { get; set; }
-
-        public DateTime payment_date { get; set; }
 
         [Required]
         [StringLength(5)]
         public string payment_method { get; set; }
+
+        public int order_id { get; set; }
+
+        public int employee_id { get; set; }
+
+        public virtual employee employee { get; set; }
 
         public virtual order order { get; set; }
     }

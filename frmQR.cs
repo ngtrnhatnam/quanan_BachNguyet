@@ -14,16 +14,24 @@ namespace quan_an_Bach_Nguyet
     public partial class frmQR : Form
     {
         private decimal totalAmount;
+        private int _employee_id;
+        private int _bill_id;
         private readonly CreatePaymentQR QR = new CreatePaymentQR();
-        public frmQR(decimal total)
+        public frmQR(decimal total, int employee_id, int bill_id)
         {
             InitializeComponent();
             totalAmount = total;
+            _employee_id = employee_id;
+            _bill_id = bill_id;
         }
 
         private async void frmQR_Load(object sender, EventArgs e)
         {
-            lblTotal.Text += totalAmount.ToString();
+            string content = DateTime.Now.ToString("ddMMyyyy") + " " + _bill_id + " " + _employee_id;
+            lblTotal.Text += totalAmount.ToString("N0");
+            lblBillID.Text += _bill_id.ToString();
+            lblEmployeeID.Text += _employee_id.ToString();
+            lblPaymentDay.Text += DateTime.Now.ToString("dd/MM/yyyy");
             try
             {
                 string qrDataUrl = await QR._CreatePaymentQR(totalAmount);
