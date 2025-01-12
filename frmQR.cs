@@ -16,6 +16,7 @@ namespace quan_an_Bach_Nguyet
         private decimal totalAmount;
         private int _employee_id;
         private int _bill_id;
+        public event Action<bool> OnFormClosedEvent;
         private readonly CreatePaymentQR QR = new CreatePaymentQR();
         public frmQR(decimal total, int employee_id, int bill_id)
         {
@@ -51,11 +52,20 @@ namespace quan_an_Bach_Nguyet
             }
         }
 
-        
-
-        private void button1_Click(object sender, EventArgs e)
+        private void btnFinish_Click(object sender, EventArgs e)
         {
-            this.Close();
+            DialogResult result = MessageBox.Show("Bạn đã nhận đủ tiền?", "Xác nhận", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                OnFormClosedEvent?.Invoke(true);
+                this.Close(); // Đóng form
+            }
+        }
+
+        private void btnReturn_Click(object sender, EventArgs e)
+        {
+            OnFormClosedEvent?.Invoke(false);
+            this.Close(); // Đóng form
         }
     }
 }

@@ -64,27 +64,44 @@ namespace quan_an_Bach_Nguyet
                 try
                 {
                     conn.Open();
-                    String querry = "SELECT * FROM users WHERE username = '" + txt_Username.Text + "' AND password = '" + txt_Password.Text + "'";
-                    using (SqlCommand cmd = new SqlCommand(querry, conn))
+                    String query = "SELECT * FROM users WHERE username = @username";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@username", username);
-                        cmd.Parameters.AddWithValue("@password", password);
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
+                            // Kiểm tra nếu có dữ liệu
                             if (reader.Read())
                             {
-                                int employeeId = reader.GetInt32(reader.GetOrdinal("employee_id"));
-                                bool permission = reader.GetBoolean(reader.GetOrdinal("permission"));
-                                Hide();
-                                frmTrangChu home = new frmTrangChu(employeeId, permission);
-                                home.ShowDialog();
-                                home = null;
-                                Show();
-                                txt_Password.Clear();
+                                var storedHashedPassword = reader["password"] as string;
+
+                                // Kiểm tra mật khẩu người dùng nhập với mật khẩu đã mã hóa
+                                if (VerifyPasswordWithBcrypt(password, storedHashedPassword))
+                                {
+                                    int employeeId = reader.GetInt32(reader.GetOrdinal("employee_id"));
+                                    bool permission = reader.GetBoolean(reader.GetOrdinal("permission"));
+
+                                    // Ẩn form đăng nhập và hiển thị trang chủ
+                                    Hide();
+                                    frmTrangChu home = new frmTrangChu(employeeId, permission);
+                                    home.ShowDialog();
+                                    home = null;
+                                    Show();
+
+                                    // Xóa mật khẩu và đưa focus về txt_Username
+                                    txt_Password.Clear();
+                                    txt_Username.Clear();
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Thông tin tài khoản hoặc mật khẩu không đúng!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    txt_Password.Clear();
+                                    txt_Username.Focus();
+                                }
                             }
                             else
                             {
-                                MessageBox.Show("Thông tin tài khoản hoặc mật khẩu không đúng!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("Thông tin tài khoản không đúng!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 txt_Password.Clear();
                                 txt_Username.Focus();
                             }
@@ -95,10 +112,6 @@ namespace quan_an_Bach_Nguyet
                 {
                     MessageBox.Show(ex.Message);
                 }
-                finally
-                {
-                    conn.Close();
-                }
             }
         }
 
@@ -108,6 +121,11 @@ namespace quan_an_Bach_Nguyet
             {
                 btn_Login.PerformClick();
             }
+        }
+
+        public bool VerifyPasswordWithBcrypt(string enteredPassword, string hashedPassword)
+        {
+            return BCrypt.Net.BCrypt.Verify(enteredPassword, hashedPassword);
         }
     }
 }

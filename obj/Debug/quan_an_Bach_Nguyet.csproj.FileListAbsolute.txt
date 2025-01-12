@@ -50,3 +50,6 @@ C:\Users\moder\quanan_BachNguyet\bin\Debug\System.Text.Encodings.Web.xml
 C:\Users\moder\quanan_BachNguyet\bin\Debug\System.Text.Json.xml
 C:\Users\moder\quanan_BachNguyet\bin\Debug\System.Threading.Tasks.Extensions.xml
 C:\Users\moder\quanan_BachNguyet\bin\Debug\System.ValueTuple.xml
+C:\Users\moder\quanan_BachNguyet\bin\Debug\DevComponents.DotNetBar.Layout.dll
+C:\Users\moder\quanan_BachNguyet\bin\Debug\BCrypt.Net-Next.dll
+C:\Users\moder\quanan_BachNguyet\bin\Debug\BCrypt.Net-Next.xml

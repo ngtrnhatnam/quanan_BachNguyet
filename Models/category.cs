@@ -16,7 +16,6 @@ namespace quan_an_Bach_Nguyet.Models
         }
 
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int category_id { get; set; }
 
         [Required]

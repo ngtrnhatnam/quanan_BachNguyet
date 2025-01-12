@@ -15,12 +15,11 @@ namespace quan_an_Bach_Nguyet.Models
         }
 
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int menuitem_id { get; set; }
 
         [Required]
         [StringLength(255)]
-        public string name { get; set; }
+        public string item_name { get; set; }
 
         public int category_id { get; set; }
 

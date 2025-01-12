@@ -1,20 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Globalization;
-using System.Linq;
-using System.Net;
 using System.Net.NetworkInformation;
-using System.Runtime;
-using System.Runtime.InteropServices;
-using System.Security.Principal;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using QRCoder;
-using static System.Net.WebRequestMethods;
 
 namespace quan_an_Bach_Nguyet
 {
@@ -74,6 +61,7 @@ namespace quan_an_Bach_Nguyet
         private void frmTrangChu_Load(object sender, EventArgs e)
         {
             btnSelling_Click(sender,e);
+            
         }
             
         private async void internet_Check_Tick(object sender, EventArgs e)
@@ -117,6 +105,23 @@ namespace quan_an_Bach_Nguyet
             employee.Show();
             employee.WindowState = FormWindowState.Maximized;
             employee.MaximizeBox = employee.MinimizeBox = false;
+        }
+
+        private void btnQuanLyHoaDon_Click(object sender, EventArgs e)
+        {
+            frmQuanLyHoaDon invoice = new frmQuanLyHoaDon();
+
+            foreach (Form child in MdiChildren)
+            {
+                child.Close();
+            }
+
+            // Define Mdi parent form
+            invoice.MdiParent = this;
+            invoice.Dock = DockStyle.Fill;
+            invoice.Show();
+            invoice.WindowState = FormWindowState.Maximized;
+            invoice.MaximizeBox = invoice.MinimizeBox = false;
         }
     }
 }

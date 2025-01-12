@@ -24,16 +24,34 @@ namespace quan_an_Bach_Nguyet
             _employee_id = employee_id;
         }
 
-        private void LoadData(object sender, EventArgs e)
+        private void frmBanHang_Load(object sender, EventArgs e)
+        {
+            SetPlaceholderText(txtFindBox, "Nhập tên cần tìm...");
+            LoadData("");
+            LoadBillID();
+            FillCategory();
+
+        }
+
+        private void LoadData(string searchText)
         {
             SqlConnection conn = new SqlConnection(@"Data source=MSI;initial catalog=BachNguyet;integrated security=True");
-            LoadBillID();
-            String querry = "SELECT menuitem_id, name, price, availability FROM menu_items";
+            String querry = "SELECT menuitem_id, item_name, price, availability FROM menu_items";
+
+            if (!string.IsNullOrWhiteSpace(searchText) && searchText != "Nhập tên cần tìm...")
+            {
+                querry += " WHERE item_name LIKE @searchText";
+            }
+
             try
             {
                 using (SqlConnection connection = conn)
                 {
                     SqlCommand cmd = new SqlCommand(querry, connection);
+                    if (!string.IsNullOrWhiteSpace(searchText))
+                    {
+                        cmd.Parameters.AddWithValue("@searchText", $"%{searchText}%");
+                    }
                     conn.Open();
                     SqlDataReader reader = cmd.ExecuteReader();
                     pnlMenu.SuspendLayout(); // Tạm dừng cập nhật giao diện
@@ -41,9 +59,10 @@ namespace quan_an_Bach_Nguyet
                     while (reader.Read())
                     {
                         string id = reader["menuitem_id"].ToString();
-                        string name = reader["name"].ToString();
+                        string name = reader["item_name"].ToString();
                         string price = reader["price"].ToString();
                         bool availability = (bool)reader["availability"];
+
                         Widget wdg = new Widget();
                         wdg.SetData(id, name, price, availability);
                         wdg.Click += Widget_Click;
@@ -53,28 +72,35 @@ namespace quan_an_Bach_Nguyet
                     pnlMenu.ResumeLayout();
                     
                 }
-            } catch (Exception ex)
+            } 
+            catch (Exception ex)
             {
                 MessageBox.Show($"Lỗi khi tải dữ liệu: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private Button _previousButton;
-        private void btn_Click(object sender, EventArgs e)
+        private void FillCategory()
         {
-            if (sender is Button button)
+            try
             {
-                // Đặt lại màu của nút trước đó (nếu có)
-                if (_previousButton != null)
+                BachNguyetDBContext context = new BachNguyetDBContext();
+                List<category> listCategory = context.categories.ToList();
+
+                listCategory.Insert(0, new category
                 {
-                    _previousButton.BackColor = Color.FromArgb(1, 115, 199);
-                }
+                    category_id = 0,
+                    fod_category = "Tất cả"
+                });
 
-                // Đổi màu nút hiện tại
-                button.BackColor = Color.OrangeRed;
+                this.cmbCategory.DataSource = listCategory;
+                this.cmbCategory.DisplayMember = "fod_category";
+                this.cmbCategory.ValueMember = "category_id";
+                cmbCategory.SelectedIndex = 0;
 
-                // Cập nhật nút hiện tại thành nút trước đó
-                _previousButton = button;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
             }
         }
 
@@ -178,10 +204,11 @@ namespace quan_an_Bach_Nguyet
                 if (result == DialogResult.Yes)
                 {
                     MessageBox.Show("Hoàn tất hóa đơn!");
+                    SaveOrder();
+                    SaveBill("Cash");
+                    LoadBillID();
                     dgvOrder.Rows.Clear();
                     dgvOrder.Refresh();
-                    SaveToDB("Cash");
-                    LoadBillID();
                     txtTongCong.Text = txtSoLuong.Text = "0";
                     
                 }
@@ -191,6 +218,19 @@ namespace quan_an_Bach_Nguyet
                 decimal total = Convert.ToDecimal(txtTongCong.Text);
                 int bill_id = int.Parse(txtBillID.Text);
                 frmQR createQR = new frmQR(total, bill_id, _employee_id);
+                createQR.OnFormClosedEvent += (result) =>
+                {
+                    if (result)
+                    {
+                        MessageBox.Show("Hoàn tất hóa đơn!");
+                        SaveOrder();
+                        SaveBill("Bank");
+                        LoadBillID();
+                        dgvOrder.Rows.Clear();
+                        dgvOrder.Refresh();
+                        txtTongCong.Text = txtSoLuong.Text = "0";
+                    }
+                };
                 createQR.ShowDialog();
             }
         }
@@ -209,21 +249,12 @@ namespace quan_an_Bach_Nguyet
             }
         }
 
-        private void SaveToDB(string method)
+        private void SaveOrder()
         {
             try
             {
-
                 using (var context = new BachNguyetDBContext())
                 {
-
-                    // Kiểm tra employee_id có tồn tại không
-                    if (!context.employees.Any(e => e.employee_id == _employee_id))
-                    {
-                        MessageBox.Show("Employee ID không tồn tại. Vui lòng kiểm tra lại!");
-                        return;
-                    }
-
                     order _order = new order
                     {
                         order_id = int.Parse(txtBillID.Text),
@@ -232,7 +263,25 @@ namespace quan_an_Bach_Nguyet
                     };
                     context.orders.Add(_order);
                     context.SaveChanges();
+                    SaveOrderDetail();
+                }
+            }
+            catch (DbUpdateException dbEx)
+            {
+                MessageBox.Show(dbEx.InnerException?.InnerException?.Message ?? dbEx.Message, "Lỗi khi lưu dữ liệu bảng Order!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi lưu: {ex.Message}");
+            }
+        }
 
+        private void SaveBill(string method)
+        {
+            try
+            {
+                using (var context = new BachNguyetDBContext())
+                {
                     bill _bill = new bill
                     {
                         payment_date = DateTime.Now,
@@ -241,18 +290,13 @@ namespace quan_an_Bach_Nguyet
                         order_id = int.Parse(txtBillID.Text),
                         employee_id = _employee_id
                     };
-
-                    // Thêm xuống vào table
-                    //context.order_details.AddRange(orderDetails);
                     context.bills.Add(_bill);
-                    // Lưu xuống database
                     context.SaveChanges();
-                    SaveOrderDetail();
                 }
             }
             catch (DbUpdateException dbEx)
             {
-                MessageBox.Show(dbEx.InnerException?.InnerException?.Message ?? dbEx.Message, "Lỗi khi lưu dữ liệu!");
+                MessageBox.Show(dbEx.InnerException?.InnerException?.Message ?? dbEx.Message, "Lỗi khi lưu dữ liệu bảng Bills!");
             }
             catch (Exception ex)
             {
@@ -270,10 +314,10 @@ namespace quan_an_Bach_Nguyet
                     List<order_details> orderDetails = new List<order_details>();
                     for (int i = 0; i < dgvOrder.Rows.Count; i++)
                     {
-                        var menuItemId = int.Parse(dgvOrder.Rows[i].Cells["colMaMon"].Value?.ToString() ?? "0");
-                        var price = decimal.Parse(dgvOrder.Rows[i].Cells["colGiaMon"].Value?.ToString() ?? "0");
-                        var quantity = int.Parse(dgvOrder.Rows[i].Cells["colSoLuong"].Value?.ToString() ?? "0");
-                        var subtotal = decimal.Parse(dgvOrder.Rows[i].Cells["colTongCong"].Value?.ToString() ?? "0");
+                        var menuItemId = int.Parse(dgvOrder.Rows[i].Cells["colMaMon"].Value?.ToString());
+                        var price = decimal.Parse(dgvOrder.Rows[i].Cells["colGiaMon"].Value?.ToString());
+                        var quantity = int.Parse(dgvOrder.Rows[i].Cells["colSoLuong"].Value?.ToString());
+                        var subtotal = decimal.Parse(dgvOrder.Rows[i].Cells["colTongCong"].Value?.ToString());
                         if (menuItemId > 0 && price > 0 && quantity > 0 && subtotal > 0)
                         {
                             order_details _order_detail = new order_details
@@ -319,6 +363,108 @@ namespace quan_an_Bach_Nguyet
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void SetPlaceholderText(TextBox textBox, string placeholder)
+        {
+            textBox.Text = placeholder; // Đặt chữ mờ làm nội dung ban đầu
+            textBox.ForeColor = System.Drawing.Color.Gray; // Đổi màu chữ thành màu xám
+
+            // Khi người dùng nhấn vào TextBox, xóa chữ mờ
+            textBox.Enter += (sender, e) =>
+            {
+                if (textBox.Text == placeholder)
+                {
+                    textBox.Text = "";
+                    textBox.ForeColor = System.Drawing.Color.Black; // Đổi màu chữ khi nhập liệu
+                }
+            };
+
+            // Khi người dùng rời khỏi TextBox, khôi phục chữ mờ nếu không có nội dung
+            textBox.Leave += (sender, e) =>
+            {
+                if (string.IsNullOrEmpty(textBox.Text))
+                {
+                    textBox.Text = placeholder;
+                    textBox.ForeColor = System.Drawing.Color.Gray; // Đổi màu chữ thành màu xám
+                }
+            };
+        }
+
+        private void txtFindBox_TextChanged(object sender, EventArgs e)
+        {
+            string searchText = txtFindBox.Text.Trim();
+            if (txtFindBox.ForeColor != System.Drawing.Color.Gray)
+            {
+                LoadData(searchText);
+            }
+        }
+
+        private void cmbCategory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cmbCategory.SelectedValue != null && int.TryParse(cmbCategory.SelectedValue.ToString(), out int selectedCategoryId))
+                {
+                    LoadWidgetsByCategory(selectedCategoryId);
+                }
+            } catch { }
+        }
+
+        private void LoadWidgetsByCategory(int categoryId)
+        {
+            SqlConnection conn = new SqlConnection(@"Data source=MSI;initial catalog=BachNguyet;integrated security=True");
+            string query;
+
+            // Nếu chọn "Tất cả" (ID = 0), hiển thị tất cả menu_items
+            if (categoryId == 0)
+            {
+                query = "SELECT menuitem_id, item_name, price, availability FROM menu_items";
+            }
+            else
+            {
+                // Hiển thị menu_items theo category_id
+                query = "SELECT menuitem_id, item_name, price, availability FROM menu_items WHERE category_id = @categoryId";
+            }
+
+            try
+            {
+                using (SqlConnection connection = conn)
+                {
+                    SqlCommand cmd = new SqlCommand(query, connection);
+                    if (categoryId != 0)
+                    {
+                        cmd.Parameters.AddWithValue("@categoryId", categoryId);
+                    }
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    pnlMenu.SuspendLayout(); // Tạm dừng cập nhật giao diện
+                    pnlMenu.Controls.Clear(); // Xóa các widget cũ nếu cần
+
+                    while (reader.Read())
+                    {
+                        string id = reader["menuitem_id"].ToString();
+                        string name = reader["item_name"].ToString();
+                        string price = reader["price"].ToString();
+                        bool availability = (bool)reader["availability"];
+
+                        // Tạo Widget và thiết lập dữ liệu
+                        Widget wdg = new Widget();
+                        wdg.SetData(id, name, price, availability);
+                        wdg.Click += Widget_Click;
+
+                        pnlMenu.Controls.Add(wdg); // Thêm Widget vào Panel
+                    }
+
+                    reader.Close();
+                    pnlMenu.ResumeLayout(); // Tiếp tục cập nhật giao diện
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tải dữ liệu: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

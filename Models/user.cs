@@ -9,7 +9,6 @@ namespace quan_an_Bach_Nguyet.Models
     public partial class user
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int account_id { get; set; }
 
         public int employee_id { get; set; }

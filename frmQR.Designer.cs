@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnReturn = new System.Windows.Forms.Button();
+            this.btnFinish = new System.Windows.Forms.Button();
             this.ptbQR = new System.Windows.Forms.PictureBox();
             this.lblTotal = new System.Windows.Forms.Label();
             this.lblBillID = new System.Windows.Forms.Label();
@@ -49,24 +49,25 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Thông tin:";
             // 
-            // button1
+            // btnReturn
             // 
-            this.button1.Location = new System.Drawing.Point(652, 398);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(112, 40);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Hủy";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnReturn.Location = new System.Drawing.Point(652, 398);
+            this.btnReturn.Name = "btnReturn";
+            this.btnReturn.Size = new System.Drawing.Size(112, 40);
+            this.btnReturn.TabIndex = 2;
+            this.btnReturn.Text = "Hủy";
+            this.btnReturn.UseVisualStyleBackColor = true;
+            this.btnReturn.Click += new System.EventHandler(this.btnReturn_Click);
             // 
-            // button2
+            // btnFinish
             // 
-            this.button2.Location = new System.Drawing.Point(486, 398);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(112, 40);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Kiểm tra lại";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnFinish.Location = new System.Drawing.Point(486, 398);
+            this.btnFinish.Name = "btnFinish";
+            this.btnFinish.Size = new System.Drawing.Size(112, 40);
+            this.btnFinish.TabIndex = 3;
+            this.btnFinish.Text = "Hoàn tất";
+            this.btnFinish.UseVisualStyleBackColor = true;
+            this.btnFinish.Click += new System.EventHandler(this.btnFinish_Click);
             // 
             // ptbQR
             // 
@@ -127,8 +128,8 @@
             this.Controls.Add(this.lblPaymentDay);
             this.Controls.Add(this.lblBillID);
             this.Controls.Add(this.lblTotal);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnFinish);
+            this.Controls.Add(this.btnReturn);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.ptbQR);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -146,8 +147,8 @@
 
         private System.Windows.Forms.PictureBox ptbQR;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnReturn;
+        private System.Windows.Forms.Button btnFinish;
         private System.Windows.Forms.Label lblTotal;
         private System.Windows.Forms.Label lblBillID;
         private System.Windows.Forms.Label lblPaymentDay;

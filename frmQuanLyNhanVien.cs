@@ -1,21 +1,14 @@
 ﻿using quan_an_Bach_Nguyet.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
-using System.Xml.Linq;
-using System.Runtime.Remoting.Contexts;
 using System.IO;
-using System.Security.Cryptography;
+using BCrypt.Net;
 
 namespace quan_an_Bach_Nguyet
 {
@@ -51,7 +44,19 @@ namespace quan_an_Bach_Nguyet
 
                 // Lấy danh sách nhân viên
                 List<employee> _employee = context.employees.ToList();
-                
+                List<user> _user = context.users.ToList();
+
+                var employeeUserList = from emp in _employee
+                                       join usr in _user on emp.employee_id equals usr.employee_id
+                                       select new
+                                       {
+                                           emp.employee_id,
+                                           usr.account_id,
+                                           usr.username,
+                                           usr.password,
+                                           usr.permission
+                                       };
+
                 BindGrid(_employee);
 
                 txtTotal.Text = _employee.Count.ToString();
@@ -125,6 +130,24 @@ namespace quan_an_Bach_Nguyet
                         {
                             ptbNhanVien.Image = Image.FromStream(ms);
                         }
+                        // Lấy danh sách nhân viên
+                        List<employee> _employee = context.employees.ToList();
+                        List<user> _user = context.users.ToList();
+
+                        var userInfo = (from emp in _employee
+                                        join usr in _user on emp.employee_id equals usr.employee_id
+                                        where emp.employee_id == int.Parse(txt_MaNV.Text)
+                                        select new
+                                        {
+                                            emp.employee_id,
+                                            usr.account_id,
+                                            usr.username,
+                                            usr.password,
+                                            usr.permission
+                                        }).FirstOrDefault();
+                        txtUsername.Text = userInfo.username;
+                        txtPassword.Text = userInfo.password;
+                        chbPermision.Checked = userInfo.permission ? true : false;
                     }
                 }
             }
@@ -194,7 +217,7 @@ namespace quan_an_Bach_Nguyet
 
         private void EmptyTexbox()
         {
-            txtCCCD.Text = txtChucVu.Text = txtLuongCoBan.Text = txt_Email.Text =
+            txtCCCD.Text = txtChucVu.Text = txtLuongCoBan.Text = txt_Email.Text = txtPassword.Text = txtUsername.Text =
             txt_MaNV.Text = txt_SDT.Text = txt_TenNV.Text = String.Empty;
         }
 
@@ -207,10 +230,10 @@ namespace quan_an_Bach_Nguyet
                 if (dgvEmployee.SelectedRows.Count > 0)
                 {
                     int id = int.Parse(txtTotal.Text);
-                    btnAdd.Visible = btnEdit.Visible = dgvEmployee.Enabled = dtpNgayVaoLam.Enabled = false;
-                    btnSave_Edit.Visible = btnReturn_Edit.Visible = rdbDaNghiViec.Enabled = rdbVanLamViec.Enabled = true;
-                    txtCCCD.Enabled = txtChucVu.Enabled = txtLuongCoBan.Enabled = btnInsertImage.Enabled =
-                    txt_Email.Enabled = txt_SDT.Enabled = txt_TenNV.Enabled = true;
+                    btnAdd.Visible = btnEdit.Visible = dgvEmployee.Enabled = false;
+                    btnSave_Edit.Visible = btnReturn_Edit.Visible = rdbDaNghiViec.Enabled = rdbVanLamViec.Enabled = dtpNgayVaoLam.Enabled = true;
+                    txtCCCD.Enabled = txtChucVu.Enabled = txtLuongCoBan.Enabled = btnInsertImage.Enabled = chbPermision.Enabled =
+                    txt_Email.Enabled = txt_SDT.Enabled = txt_TenNV.Enabled = txtPassword.Enabled =true;
                 }
                 else
                 {
@@ -229,10 +252,10 @@ namespace quan_an_Bach_Nguyet
             int id = int.Parse(txtTotal.Text);
             txt_MaNV.Text = (id+1).ToString();
             ptbNhanVien.Image = null;
-            btnAdd.Visible =  btnEdit.Visible = grbTrangThai.Visible = dgvEmployee.Enabled = false;
-            btnSave_Add.Visible = btnReturn_Add.Visible = true;
-            txtCCCD.Enabled = txtChucVu.Enabled = txtLuongCoBan.Enabled = btnInsertImage.Enabled =
-            txt_Email.Enabled = txt_SDT.Enabled = txt_TenNV.Enabled = true;
+            btnAdd.Visible = btnEdit.Visible = dgvEmployee.Enabled = false;
+            btnSave_Add.Visible = btnReturn_Add.Visible = rdbDaNghiViec.Enabled = rdbVanLamViec.Enabled = dtpNgayVaoLam.Enabled = true;
+            txtCCCD.Enabled = txtChucVu.Enabled = txtLuongCoBan.Enabled = btnInsertImage.Enabled = chbPermision.Enabled =
+            txt_Email.Enabled = txt_SDT.Enabled = txt_TenNV.Enabled = txtUsername.Enabled = txtPassword.Enabled = true;
         }
 
         private void btnSave_Add_Click(object sender, EventArgs e)
@@ -265,7 +288,6 @@ namespace quan_an_Bach_Nguyet
                     // Thêm nhân viên mới
                     employee _employee = new employee
                     {
-                        employee_id = int.Parse(txt_MaNV.Text),
                         fullname = txt_TenNV.Text,
                         cccd = txtCCCD.Text,
                         position = txtChucVu.Text,
@@ -276,12 +298,23 @@ namespace quan_an_Bach_Nguyet
                         picture = imageBytes,
                         status = true
                     };
+                        // Thêm xuống vào table
+                        context.employees.Add(_employee);
+                        // Lưu xuống database
+                        context.SaveChanges();
 
-
+                    user _user = new user
+                    {
+                        employee_id = int.Parse(txt_MaNV.Text),
+                        username = txtUsername.Text,
+                        password = HashPasswordWithBcrypt(txtPassword.Text),
+                        permission = chbPermision.Checked ? true : false,
+                    };
                     // Thêm xuống vào table
-                    context.employees.Add(_employee);
+                    context.users.Add(_user);
                     // Lưu xuống database
                     context.SaveChanges();
+
 
                     // Hiển thị lại trên giao diện danh sách
                     List<employee> _employeeList = context.employees.ToList();
@@ -289,10 +322,10 @@ namespace quan_an_Bach_Nguyet
 
                     // Hiển thị rỗng các field
                     EmptyTexbox();
-                    btnAdd.Visible = btnEdit.Visible = dgvEmployee.Enabled = grbTrangThai.Visible = true;
-                    btnSave_Add.Visible = btnReturn_Add.Visible = dtpNgayVaoLam.Enabled = false;
-                    txtCCCD.Enabled = txtChucVu.Enabled = txtLuongCoBan.Enabled = btnInsertImage.Enabled =
-                    txt_Email.Enabled = txt_SDT.Enabled = txt_TenNV.Enabled = false;
+                    btnAdd.Visible = btnEdit.Visible = dgvEmployee.Enabled= true;
+                    btnSave_Add.Visible = btnReturn_Add.Visible = rdbDaNghiViec.Enabled = rdbVanLamViec.Enabled = dtpNgayVaoLam.Enabled = false;
+                    txtCCCD.Enabled = txtChucVu.Enabled = txtLuongCoBan.Enabled = btnInsertImage.Enabled = chbPermision.Enabled =
+                    txt_Email.Enabled = txt_SDT.Enabled = txt_TenNV.Enabled = txtUsername.Enabled = txtPassword.Enabled = false;
 
                     // Hiển thị thông báo
                     MessageBox.Show("Thêm mới thành công", "Thông tin từ hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -346,6 +379,15 @@ namespace quan_an_Bach_Nguyet
                         _employeeID.status = true;
                     }
 
+                    user _user = context.users.FirstOrDefault(x => x.employee_id == id);
+                    if (!string.IsNullOrEmpty(txtPassword.Text) && !BCrypt.Net.BCrypt.Verify(txtPassword.Text, _user.password))
+                    {
+                        _user.password = HashPasswordWithBcrypt(txtPassword.Text);
+                    }
+
+                    _user.permission = chbPermision.Checked ? true : false;
+
+
                     // Lưu xuống database
                     context.SaveChanges();
 
@@ -355,10 +397,10 @@ namespace quan_an_Bach_Nguyet
 
                     // Hiển thị rỗng các field
                     EmptyTexbox();
-                    btnAdd.Visible = btnEdit.Visible = dgvEmployee.Enabled = true;
-                    btnSave_Edit.Visible = btnReturn_Edit.Visible = dtpNgayVaoLam.Enabled = false;
-                    txtCCCD.Enabled = txtChucVu.Enabled = rdbVanLamViec.Enabled = rdbDaNghiViec.Enabled = btnInsertImage.Enabled =
-                    txtLuongCoBan.Enabled = txt_Email.Enabled = txt_SDT.Enabled = txt_TenNV.Enabled = false;
+                    btnAdd.Visible = btnEdit.Visible = dgvEmployee.Enabled= true;
+                    btnSave_Edit.Visible = btnReturn_Edit.Visible = rdbDaNghiViec.Enabled = rdbVanLamViec.Enabled = dtpNgayVaoLam.Enabled  = false;
+                    txtCCCD.Enabled = txtChucVu.Enabled = txtLuongCoBan.Enabled = btnInsertImage.Enabled = chbPermision.Enabled =
+                    txt_Email.Enabled = txt_SDT.Enabled = txt_TenNV.Enabled = txtUsername.Enabled = txtPassword.Enabled = false;
 
                     // Hiển thị thông báo
                     MessageBox.Show("Sửa thông tin thành công", "Thông tin từ hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -373,23 +415,23 @@ namespace quan_an_Bach_Nguyet
         private void btnReturn_Add_Click(object sender, EventArgs e)
         {
             EmptyTexbox();
-            btnAdd.Visible = btnEdit.Visible = dgvEmployee.Enabled = grbTrangThai.Visible = true;
-            btnSave_Add.Visible = btnReturn_Add.Visible = dtpNgayVaoLam.Enabled = false;
-            txtCCCD.Enabled = txtChucVu.Enabled = txtLuongCoBan.Enabled = btnInsertImage.Enabled =
-            txt_Email.Enabled = txt_SDT.Enabled = txt_TenNV.Enabled = false;
+            btnAdd.Visible = btnEdit.Visible = dgvEmployee.Enabled = false;
+            btnSave_Add.Visible = btnReturn_Add.Visible = rdbDaNghiViec.Enabled = rdbVanLamViec.Enabled = dtpNgayVaoLam.Enabled  = true;
+            txtCCCD.Enabled = txtChucVu.Enabled = txtLuongCoBan.Enabled = btnInsertImage.Enabled = chbPermision.Enabled =
+            txt_Email.Enabled = txt_SDT.Enabled = txt_TenNV.Enabled = txtUsername.Enabled = txtPassword.Enabled = true;
         }
 
         private void btnReturn_Edit_Click(object sender, EventArgs e)
         {
             btnAdd.Visible = btnEdit.Visible = dgvEmployee.Enabled = true;
-            btnSave_Edit.Visible = btnReturn_Edit.Visible = dtpNgayVaoLam.Enabled = false;
-            txtCCCD.Enabled = txtChucVu.Enabled = rdbVanLamViec.Enabled = rdbDaNghiViec.Enabled = btnInsertImage.Enabled =
-            txtLuongCoBan.Enabled = txt_Email.Enabled = txt_SDT.Enabled = txt_TenNV.Enabled = false;
+            btnSave_Edit.Visible = btnReturn_Edit.Visible = rdbDaNghiViec.Enabled = rdbVanLamViec.Enabled = false;
+            txtCCCD.Enabled = txtChucVu.Enabled = txtLuongCoBan.Enabled = btnInsertImage.Enabled = chbPermision.Enabled = dtpNgayVaoLam.Enabled =
+            txt_Email.Enabled = txt_SDT.Enabled = txt_TenNV.Enabled = txtUsername.Enabled = txtPassword.Enabled = false;
         }
 
         private void btnFind_Click(object sender, EventArgs e)
         {
-            using (var context = new BachNguyetDBContext()) // Thay bằng tên DbContext của bạn
+            using (var context = new BachNguyetDBContext())
             {
                 // Lọc nhân viên
                 var timNhanVien = context.employees
@@ -419,6 +461,11 @@ namespace quan_an_Bach_Nguyet
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        public string HashPasswordWithBcrypt(string password)
+        {
+            return BCrypt.Net.BCrypt.HashPassword(password);
         }
     }
 }
